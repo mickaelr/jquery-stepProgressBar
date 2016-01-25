@@ -78,6 +78,25 @@
             this.$el.append(this.bottomLabelContainer);
 
             this._updateProgress();
+
+            if(this.settings.steps && this.settings.steps.length > 0) {
+                this.stepsWrapper = $('<span>');
+                this.stepsWrapper.addClass('step-progressbar-steps-wrapper');
+                this.barElm.append(this.stepsWrapper);
+                this.stepsContainer = $('<span>');
+                this.stepsContainer.addClass('step-progressbar-steps');
+                this.stepsWrapper.append(this.stepsContainer);
+
+                this._calcStepsProgressValues();
+
+                for(var i = 0; i < this.settings.steps.length; i++) {
+                    this.stepContainer = $('<span>');
+                    this.stepContainer.addClass('step-progressbar-step');
+                    this.stepsContainer.append(this.stepContainer);
+
+                    this.stepContainer.css('left', this.settings.steps[i].progressValue + '%');
+                }
+            }
         },
 
         /**
@@ -136,41 +155,38 @@
 
         //
         _calcProgressValue: function() {
-            if(isNullOrUndefined(this.settings.currentValue))
-                this.progressValue = 0;
-            else if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0)) {
+            if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0)) {
                 this.progressValue = 100;
             } else {
-                var minAndMax = this._retreiveMinAndMaxSteps();
-                var minStep = minAndMax.minValue;
-                var maxStep = minAndMax.maxValue;
-                // set progressValue depending on min & max step values
-                if(isNullOrUndefined(minStep) && isNullOrUndefined(maxStep))
-                    this.progressValue = 100;
-                else if(isNullOrUndefined(minStep) && !isNullOrUndefined(maxStep)) {
-                    if(this.settings.currentValue < maxStep)
-                        this.progressValue = 0;
-                    else
-                        this.progressValue = 100;
-                } else if(isNullOrUndefined(maxStep) && !isNullOrUndefined(minStep)) {
-                    if(this.settings.currentValue < minStep)
-                        this.progressValue = 0;
-                    else
-                        this.progressValue = 100;
-                } else if(!isNullOrUndefined(minStep) && !isNullOrUndefined(maxStep)) {
-                    if(this.settings.currentValue < minStep)
-                        this.progressValue = 0;
-                    else if(this.settings.currentValue > maxStep)
-                        this.progressValue = 100;
-                    else
-                       this.progressValue = (this.settings.currentValue - minStep) / (maxStep - minStep) * 100;
-                }
+                var minAndMax = this._retrieveMinAndMaxSteps();
+                var minValue = minAndMax.minValue;
+                var maxValue = minAndMax.maxValue;
+
+                this.progressValue = getPercentValue(this.settings.currentValue, minValue, maxValue);
             }
             return this.progressValue;
         },
 
         //
-        _retreiveMinAndMaxSteps: function() {
+        _calcStepsProgressValues: function() {
+            if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0)) {
+                return;
+            } else {
+                var minAndMax = this._retrieveMinAndMaxSteps();
+                var minValue = minAndMax.minValue;
+                var maxValue = minAndMax.maxValue;
+
+                for(var i = 0; i < this.settings.steps.length; i++) {
+                    var step = this.settings.steps[i];
+
+                    step.progressValue = getPercentValue(step.value, minValue, maxValue);
+                }
+                return this.settings.steps;
+            }
+        },
+
+        //
+        _retrieveMinAndMaxSteps: function() {
             if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0)) {
                 return;
             } else {
@@ -212,6 +228,34 @@
     //
     var isNullOrUndefined = function(variable) {
         return (variable === null || variable === undefined);
+    };
+
+    //
+    var getPercentValue = function(value, min, max) {
+        if(isNullOrUndefined(value))
+            return undefined;
+        else {
+            if(isNullOrUndefined(min) && isNullOrUndefined(max))
+                return 100;
+            else if(isNullOrUndefined(min) && !isNullOrUndefined(max)) {
+                if(value < max)
+                    return 0;
+                else
+                    return 100;
+            } else if(isNullOrUndefined(max) && !isNullOrUndefined(min)) {
+                if(value < min)
+                    return 0;
+                else
+                    return 100;
+            } else if(!isNullOrUndefined(min) && !isNullOrUndefined(max)) {
+                if(value < min)
+                    return 0;
+                else if(value > max)
+                    return 100;
+                else
+                   return (value - min) / (max - min) * 100;
+            }
+        }
     };
     
     $.fn[pluginName] = function(options) {

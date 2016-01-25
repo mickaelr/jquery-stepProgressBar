@@ -5,9 +5,15 @@
 $progressbar-height: 50px;
 $progressbar-color: #0E97C4;
 $progressbar-background: #FFFFFF;
+
 $progressbar-border-width: 3px;
 $progressbar-border-style: solid;
 $progressbar-border-color: #CCCCCC;
+
+$progressbar-step-width: $progressbar-border-width;
+$progressbar-step-style: dashed;
+$progressbar-step-color: $progressbar-border-color;
+
 $progressbar-inner-border-width: 2px;
 $progressbar-inner-border-style: solid;
 $progressbar-inner-border-color: $progressbar-background;
@@ -64,6 +70,33 @@ $progressbar-inner-border-color: $progressbar-background;
 	}
 }
 .step-progressbar-bottomlabel {}
+
+.step-progressbar-steps-wrapper {
+	display: block;
+	height: 100%;
+    width: 100%;
+    padding: 0 25px 0 25px;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.step-progressbar-steps { 
+    display: block;
+    height: 100%;
+    width: 100%;
+	position: relative; 
+}
+
+.step-progressbar-step { 
+	display: block;
+    height: 100%;
+	position: absolute;
+	border-width: 0 ($progressbar-step-width / 2) 0 ($progressbar-step-width / 2);
+	border-style: $progressbar-step-style;
+	border-color: $progressbar-step-color;
+}
 
 /* ------------- *\
    ROUNDED STYLE

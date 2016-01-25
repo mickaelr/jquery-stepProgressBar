@@ -10,8 +10,8 @@
 .step-progressbar-bar-wrapper {
   width: 100%;
   height: 50px;
-  background-color: white;
-  border: 3px solid #cccccc;
+  background-color: #FFFFFF;
+  border: 3px solid #CCCCCC;
 }
 
 .step-progressbar-bar {
@@ -25,16 +25,43 @@
 .step-progressbar-bar .step-progressbar-progress {
   display: block;
   height: 100%;
-  background-color: #0e97c4;
+  background-color: #0E97C4;
   box-sizing: border-box;
   border-width: 2px;
   border-style: solid;
-  border-color: white;
+  border-color: #FFFFFF;
   -webkit-transition: width 1s;
   -moz-transition: width 1s;
   -ms-transition: width 1s;
   -o-transition: width 1s;
   transition: width 1s;
+}
+
+.step-progressbar-steps-wrapper {
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: 0 25px 0 25px;
+  box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.step-progressbar-steps {
+  display: block;
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.step-progressbar-step {
+  display: block;
+  height: 100%;
+  position: absolute;
+  border-width: 0 1.5px 0 1.5px;
+  border-style: dashed;
+  border-color: #CCCCCC;
 }
 
 /* ------------- *\
@@ -57,11 +84,11 @@
   width: 25px;
   top: 0;
   left: 0;
-  background-color: #0e97c4;
+  background-color: #0E97C4;
   box-sizing: border-box;
   border-width: 2px 0 2px 2px;
   border-style: solid;
-  border-color: white;
+  border-color: #FFFFFF;
   -webkit-border-radius: 50px 0 0 50px;
   -moz-border-radius: 50px 0 0 50px;
   -ms-border-radius: 50px 0 0 50px;
@@ -85,11 +112,11 @@
   width: 0;
   top: 0;
   right: 25px;
-  background-color: #0e97c4;
+  background-color: #0E97C4;
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
-  border-color: white;
+  border-color: #FFFFFF;
   -webkit-border-radius: 0 50px 50px 0;
   -moz-border-radius: 0 50px 50px 0;
   -ms-border-radius: 0 50px 50px 0;
