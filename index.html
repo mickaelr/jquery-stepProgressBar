@@ -21,14 +21,17 @@
                     currentValue: 100,
                     steps: [
                         {
+                            topLabel: '50unit',
                             value: 50
                         },
                         {
+                            topLabel: '150unit',
                             value: 150
                         },
                         {  
                             value: 200, 
-                            label: 'achieved!',
+                            topLabel: '200unit',
+                            bottomLabel: '<i class="fa-gift"></i> achieved!',
                             mouseOver: function() { alert('mouseOver'); },
                             click: function() { alert('click'); }
                         }
