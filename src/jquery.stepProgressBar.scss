@@ -1,0 +1,244 @@
+/* ---------------- *\
+   GLOBAL VARIABLES
+\* ---------------- */
+
+$progressbar-height: 50px;
+$progressbar-color: #0E97C4;
+$progressbar-background: #FFFFFF;
+
+$progressbar-border-width: 3px;
+$progressbar-border-style: solid;
+$progressbar-border-color: #CCCCCC;
+
+$progressbar-step-width: $progressbar-border-width;
+$progressbar-step-style: dashed;
+$progressbar-step-color: $progressbar-border-color;
+
+$progressbar-inner-border-width: 2px;
+$progressbar-inner-border-style: solid;
+$progressbar-inner-border-color: $progressbar-background;
+
+$progressbar-toplabel-font-color: #BBBBBB;
+$progressbar-toplabel-font-size: 16px;
+$progressbar-toplabel-margin-top: 5px;
+$progressbar-toplabel-margin-bottom: 5px;
+
+$progressbar-bottomlabel-font-color: #BBBBBB;
+$progressbar-bottomlabel-font-size: 16px;
+$progressbar-bottomlabel-margin-top: 5px;
+$progressbar-bottomlabel-margin-bottom: 5px;
+
+/* ------ *\
+   MIXINS
+\* ------ */
+
+@mixin border-radius($value) {
+	-webkit-border-radius: 	$value;
+	-moz-border-radius: 	$value;
+	-ms-border-radius: 		$value;
+	-o-border-radius: 		$value;
+	border-radius: 			$value;
+}
+
+@mixin transition($transition...) {
+	-webkit-transition: $transition;
+    -moz-transition:    $transition;
+    -ms-transition: 	$transition;
+    -o-transition:      $transition;
+    transition:         $transition;
+}
+
+/* ------------ *\
+   GLOBAL STYLE
+\* ------------ */
+
+.step-progressbar-container { padding: 0 $progressbar-border-width 0 $progressbar-border-width; }
+
+.step-progressbar-bar-wrapper {
+	width: 100%;
+	height: $progressbar-height;
+	margin-left: -$progressbar-border-width;
+	background-color: $progressbar-background;
+	border: $progressbar-border-width $progressbar-border-style $progressbar-border-color;
+	box-sizing: content-box;
+}
+
+.step-progressbar-bar {
+	display: inline-block;
+    position: relative;
+	height: 100%;
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0;
+
+	.step-progressbar-progress {
+		display: block;
+		height: 100%;
+	    background-color: $progressbar-color;
+	    box-sizing: border-box;
+		border-width: $progressbar-inner-border-width;
+    	border-style: $progressbar-inner-border-style;
+    	border-color: $progressbar-inner-border-color;
+	    @include transition(width 1s);
+	}
+}
+
+.step-progressbar-toplabels {
+	width: 100%;
+	height: $progressbar-toplabel-font-size;
+	margin-top: $progressbar-toplabel-margin-top;
+	margin-bottom: $progressbar-toplabel-margin-bottom;
+}
+
+.step-progressbar-bottomlabels {
+	width: 100%;
+	height: $progressbar-bottomlabel-font-size;
+	margin-top: $progressbar-bottomlabel-margin-top;
+	margin-bottom: $progressbar-bottomlabel-margin-bottom; 
+}
+
+.step-progressbar-labels-wrapper { 
+	display: block;
+	position: relative; 
+}
+
+.step-progressbar-toplabels .step-progressbar-steplabel {
+	font-size: $progressbar-toplabel-font-size;
+	color: $progressbar-toplabel-font-color;
+}
+
+.step-progressbar-bottomlabels .step-progressbar-steplabel {
+	font-size: $progressbar-bottomlabel-font-size;
+	color: $progressbar-bottomlabel-font-color;
+}
+
+.step-progressbar-steplabel {
+	display: inline-block;
+	position: absolute;
+
+	&.step-progressbar-laststep { transform: translate(-100%, 0); }
+	&:not(.step-progressbar-firststep):not(.step-progressbar-laststep) { transform: translate(-50%, 0); }
+}
+
+.step-progressbar-steps-wrapper {
+	display: block;
+	height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.step-progressbar-steps { 
+    display: block;
+    height: 100%;
+    width: 100%;
+	position: relative; 
+}
+
+.step-progressbar-step { 
+	display: block;
+    height: 100%;
+	position: absolute;
+	border-width: 0 ($progressbar-step-width / 2) 0 ($progressbar-step-width / 2);
+	border-style: $progressbar-step-style;
+	border-color: $progressbar-step-color;
+}
+
+.step-progressbar-firststep,
+.step-progressbar-laststep { display: none; }
+
+/* ------------- *\
+   ROUNDED STYLE
+\* ------------- */
+
+.step-progressbar-rounded {
+	.step-progressbar-toplabels,
+	.step-progressbar-bottomlabels { 
+		padding: 0 ($progressbar-height / 2) 0 ($progressbar-height / 2); 
+		box-sizing: border-box;
+	}
+
+	.step-progressbar-bar-wrapper { @include border-radius($progressbar-height); }
+
+	.step-progressbar-bar {
+		padding: 0 ($progressbar-height / 2) 0 ($progressbar-height / 2);
+
+		&:before { 
+			content: ' ';
+			position: absolute;
+	    	height: $progressbar-height;
+	    	width: $progressbar-height / 2;
+	    	top: 0;
+	    	left: 0;
+	    	background-color: $progressbar-color;
+	    	box-sizing: border-box;
+	    	border-width: $progressbar-inner-border-width 0 $progressbar-inner-border-width $progressbar-inner-border-width;
+	    	border-style: $progressbar-inner-border-style;
+	    	border-color: $progressbar-inner-border-color;
+	    	@include border-radius($progressbar-height 0 0 $progressbar-height);
+	    	@include transition(width .2s, left .2s);
+		}
+		&.step-progressbar-empty:before { 
+			width: 0;
+	    	left: 25px;
+	    	border-width: 0;
+		}
+
+		&:after { 
+			content: ' ';
+			position: absolute;
+		    height: $progressbar-height;
+		    width: 0;
+		    top: 0;
+		    right: $progressbar-height / 2;
+		    background-color: $progressbar-color;
+		    box-sizing: border-box;
+	    	border-width: 0;
+	    	border-style: $progressbar-inner-border-style;
+	    	border-color: $progressbar-inner-border-color;
+		    @include border-radius(0 $progressbar-height $progressbar-height 0);
+		    @include transition(width .2s, right .2s);
+		}
+		&.step-progressbar-full:after { 
+			width: $progressbar-height / 2;
+			right: 0;
+			border-width: $progressbar-inner-border-width $progressbar-inner-border-width $progressbar-inner-border-width 0;
+		}
+
+		.step-progressbar-progress { border-width: $progressbar-inner-border-width 0 $progressbar-inner-border-width 0; }
+	}
+
+	.step-progressbar-steps-wrapper { padding: 0 ($progressbar-height / 2) 0 ($progressbar-height / 2); }
+
+	.step-progressbar-firststep,
+	.step-progressbar-laststep { display: block; }
+}
+
+/* ------------- *\
+   MEDIA QUERIES
+\* ------------- */
+
+$screen-xs-max: 768px;
+$screen-sm-max: 992px;
+$screen-md-max: 1200px;
+
+/* Large devices (large desktops, 1200px and up) */
+/* No media query since this is the default here -  */
+
+/* Medium devices (desktops, less than 1200px) */
+@media (max-width : $screen-md-max) {}
+
+/* Small devices (tablets, less than 992px) */
+@media (max-width : $screen-sm-max) {}
+
+/* Extra small devices (phones, less than 768px) */
+@media (max-width : $screen-xs-max) {
+	.step-progressbar-step:not(.step-progressbar-nextstep),
+	.step-progressbar-steplabel:not(.step-progressbar-nextstep),
+	.step-progressbar-firststep:not(.step-progressbar-nextstep),
+	.step-progressbar-laststep:not(.step-progressbar-nextstep),
+	.step-progressbar-rounded .step-progressbar-firststep:not(.step-progressbar-nextstep),
+	.step-progressbar-rounded .step-progressbar-laststep:not(.step-progressbar-nextstep) { display: none; }
+}

@@ -1,0 +1,31 @@
+<h2 id="stepprogressbar-in-progress-">StepProgressBar [IN PROGRESS]</h2>
+<p>Progress bars are a bit limited when you want to display several steps on it (usually the bar starts at 0 and finishes at 100, so current value is in percents).</p>
+<p>The aim of this plugin is to easily build fully customizable progress bar, that can handle more than one single step.</p>
+<h2 id="installation">Installation</h2>
+<p>For now, the plugin has only dependencies with jQuery, so you can include it like following with plugin&#39;s js &amp; css files.</p>
+<h2 id="usage">Usage</h2>
+<p><strong>HTML</strong></p>
+<pre><code class="lang-html">    &lt;head&gt;
+        &lt;link href=&quot;path/to/plugin/jquery.StepProgressBar.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div id=&quot;element&quot;&gt;&lt;/div&gt;
+        &lt;script src=&quot;path/to/jquery/jquery.js&quot;&gt;&lt;/script&gt;
+        &lt;script src=&quot;path/to/plugin/jquery.StepProgressBar.js&quot;&gt;&lt;/script&gt;
+    &lt;/body&gt;
+</code></pre>
+<p><strong>JAVASCRIPT</strong></p>
+<pre><code class="lang-javascript">    $(document).ready(function() {
+        $(&#39;#element&#39;).stepProgressBar({
+            currentValue: 50,
+            steps: [
+                {value: 0},
+                {value: 100}
+            ]
+        });
+    });
+</code></pre>
+<h2 id="demo">Demo</h2>
+<p>See <a href="http://mickaelr.github.io/jquery-stepProgressBar/">demo project page</a></p>
+<h2 id="license">License</h2>
+<p>The plugin is under MIT License</p>

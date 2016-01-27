@@ -8,6 +8,10 @@
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" href="src/jquery.stepProgressBar.css">
+    <link rel="stylesheet" type="text/css" href="prism/prism.css">
   </head>
   <body>
     <section class="page-header">
@@ -20,47 +24,166 @@
 
     <section class="main-content">
       <h2>
-<a id="stepprogressbar-in-progress" class="anchor" href="#stepprogressbar-in-progress" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>StepProgressBar [IN PROGRESS]</h2>
+        <a id="stepprogressbar-in-progress" class="anchor" href="#stepprogressbar-in-progress" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>StepProgressBar [IN PROGRESS]
+      </h2>
 
-<p>Progress bars are a bit limited when you want to display several steps on it (usually the bar starts at 0 and finishes at 100, so current value is in percents).</p>
+      <p>Progress bars are a bit limited when you want to display several steps on it (usually the bar starts at 0 and finishes at 100, so current value is in percents).</p>
 
-<p>The aim of this plugin is to easily build fully customizable progress bar, that can handle more than one single step.</p>
+      <p>The aim of this plugin is to easily build fully customizable progress bar, that can handle more than one single step.</p>
 
-<h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+      <h2>
+        <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License
+      </h2>
 
-<p>For now, the plugin has only dependencies with jQuery, so you can include it like following with plugin's js &amp; css files.</p>
+        <p>The plugin is under MIT License</p>
 
-<h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+      <!-- START -->
+      <h2>Quickstart</h2>
 
-<p><strong>HTML</strong></p>
+        <p>
+          Include jQuery and stepProgressBar css and js in your project:
+        </p>
+<pre><code class="language-markup">
+&lt;link rel="stylesheet" type="text/css" href="path/to/stepProgressBar/jquery.stepProgressBar.css">
+&lt;script type="text/javascript" src="path/to/jquery/jquery.min.js">&lt;/script>
+&lt;script type="text/javascript" src="path/to/stepProgressBar/jquery.stepProgressBar.js">&lt;/script>
+</code></pre>
 
-<div class="highlight highlight-text-html-basic"><pre>    &lt;<span class="pl-ent">head</span>&gt;
-        &lt;<span class="pl-ent">link</span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>path/to/plugin/jquery.StepProgressBar.css<span class="pl-pds">"</span></span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span>&gt;
-    &lt;/<span class="pl-ent">head</span>&gt;
-    &lt;<span class="pl-ent">body</span>&gt;
-        &lt;<span class="pl-ent">div</span> <span class="pl-e">id</span>=<span class="pl-s"><span class="pl-pds">"</span>element<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">div</span>&gt;
-<span class="pl-s1">        &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>path/to/jquery/jquery.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
-<span class="pl-s1">        &lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>path/to/plugin/jquery.StepProgressBar.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</span>
-    &lt;/<span class="pl-ent">body</span>&gt;</pre></div>
+      <h2>Bar options</h2>
 
-<p><strong>JAVASCRIPT</strong></p>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>currentValue</td>
+              <td>number</td>
+              <td>0</td>
+              <td>Progress value we want to display on the bar</td>
+            </tr>
+            <tr>
+              <td>steps</td>
+              <td>array</td>
+              <td>[]</td>
+              <td>The different progress steps (see "Step options" section)</td>
+            </tr>
+            <tr>
+              <td>rounded</td>
+              <td>boolean</td>
+              <td>true</td>
+              <td>To switch between squared/rounded bar style</td>
+            </tr>
+            <tr>
+              <td>unit</td>
+              <td>string</td>
+              <td>''</td>
+              <td>The progress unit</td>
+            </tr>
+          </tbody>
+        </table>
 
-<div class="highlight highlight-source-js"><pre>    <span class="pl-en">$</span>(<span class="pl-c1">document</span>).<span class="pl-en">ready</span>(<span class="pl-k">function</span>() {
-        <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>#element<span class="pl-pds">'</span></span>).<span class="pl-en">stepProgressBar</span>({
-            currentValue<span class="pl-k">:</span> <span class="pl-c1">50</span>,
-            steps<span class="pl-k">:</span> [
-                {value<span class="pl-k">:</span> <span class="pl-c1">0</span>},
-                {value<span class="pl-k">:</span> <span class="pl-c1">100</span>}
-            ]
-        });
-    });</pre></div>
+      <h2>Step options</h2>
 
-<h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Default</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>value</td>
+              <td>number</td>
+              <td>undefined</td>
+              <td>Step value</td>
+            </tr>
+            <tr>
+              <td>topLabel</td>
+              <td>html string</td>
+              <td>undefined</td>
+              <td>The label we want to display for that step above the bar</td>
+            </tr>
+            <tr>
+              <td>bottomLabel</td>
+              <td>html string</td>
+              <td>undefined</td>
+              <td>The label we want to display for that step below the bar</td>
+            </tr>
+            <tr>
+              <td>mouseOver</td>
+              <td>function</td>
+              <td>function() {}</td>
+              <td>(not implemented yet) A function executed on step mouseover</td>
+            </tr>
+            <tr>
+              <td>click</td>
+              <td>function</td>
+              <td>function() {}</td>
+              <td>(not implemented yet) A function executed on step click</td>
+            </tr>
+          </tbody>
+        </table>
 
-<p>The plugin is under MIT License</p>
+      <h2>Methods</h2>
+
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Method</th>
+              <th>Description</th>
+              <th>Usage</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>getCurrentValue</td>
+              <td>Return number corresponding to current progress value</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>setCurrentValue</td>
+              <td>Set the bar progress value with a number</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+
+      <h2>Events</h2>
+        <p>[not implemented yet]</p>
+
+      <h2>Examples</h2>
+        <h3>Default</h3>
+<pre><code class="language-markup">&lt;div id=".step-progressbar-1">&lt;/div></code></pre>
+<pre><code class="language-javascript">$('#.step-progressbar-1').stepProgressBar({
+  currentValue: 100,
+  steps: [
+    {
+      topLabel: '50 unit',
+      value: 50
+    },
+    {
+      topLabel: '150 unit',
+      value: 150
+    },
+    {  
+      topLabel: '200 unit',
+      value: 200, 
+      bottomLabel: '&lt;i class="material-icons">thumb up&lt;/i> achieved!'
+    }
+  ]
+});</code></pre>
+        <div style="padding: 10px; border: 1px solid #e9ebec; border-radius: 3px;">
+          <div id="step-progressbar-1"></div>
+        </div>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mickaelr/jquery-stepProgressBar">jquery-stepProgressBar</a> is maintained by <a href="https://github.com/mickaelr">mickaelr</a>.</span>
@@ -70,6 +193,41 @@
 
     </section>
 
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="src/jquery.stepProgressBar.js"></script>
+    <script type="text/javascript" src="prism/prism.js"></script>
+    <script type="text/javascript">
+      'use strict';
+
+      $(document).ready(function() {
+        $('#step-progressbar-1').stepProgressBar({
+          currentValue: 100,
+          steps: [
+            {
+              topLabel: '50 unit',
+              value: 50
+            },
+            {
+              topLabel: '150 unit',
+              value: 150
+            },
+            {  
+              topLabel: '200 unit',
+              value: 200, 
+              bottomLabel: '<i class="material-icons">thumb up</i> achieved!',
+              mouseOver: function() { alert('mouseOver'); },
+              click: function() { alert('click'); }
+            }
+          ]
+        });
+        setTimeout(function() {
+            console.log($('#step-progressbar-1').stepProgressBar('getCurrentValue'));
+        }, 1500);
+        setTimeout(function() {
+            $('#step-progressbar-1').stepProgressBar('setCurrentValue', 190);
+        }, 3000);
+      });
+    </script>
   
   </body>
 </html>
