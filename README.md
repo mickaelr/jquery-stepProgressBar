@@ -35,6 +35,10 @@ For now, the plugin has only dependencies with jQuery, so you can include it lik
     });
 ```
 
+## Demo
+
+See [demo project page](http://mickaelr.github.io/jquery-stepProgressBar/)
+
 ## License
 
 The plugin is under MIT License
