@@ -320,7 +320,7 @@
             if(index == this.settings.steps.length - 1)
                 topLabelElm.addClass('step-progressbar-laststep');
             topLabelElm.css('left', step.progressValue + '%');
-            var label = step.topLabel ? step.topLabel : (step.value ? (step.value + this.settings.unit) : '');
+            var label = step.topLabel ? step.topLabel : (!isNullOrUndefined(step.value) ? (step.value + this.settings.unit) : '');
             topLabelElm.html(label);
             this.toplabelWrapper.append(topLabelElm);
             step.topLabelElement = topLabelElm;

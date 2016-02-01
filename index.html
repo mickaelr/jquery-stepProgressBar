@@ -164,24 +164,28 @@
         <h3>Default</h3>
 <pre><code class="language-markup">&lt;div id=".step-progressbar-1">&lt;/div></code></pre>
 <pre><code class="language-javascript">$('#.step-progressbar-1').stepProgressBar({
-  currentValue: 100,
+  currentValue: 110,
   steps: [
+    { value: 10 },
     {
-      topLabel: '50 unit',
-      value: 50
+      topLabel: '50 custom unit',
+      value: 50,
+      bottomLabel: '&lt;i class="material-icons">thumb_up&lt;/i>'
     },
     {
-      topLabel: '150 unit',
-      value: 150
+      value: 150,
+      bottomLabel: '&lt;i class="material-icons">card_giftcard&lt;/i>'
     },
     {  
-      topLabel: '200 unit',
       value: 200, 
-      bottomLabel: '&lt;i class="material-icons">thumb up&lt;/i> achieved!'
+      bottomLabel: '&lt;i class="material-icons">star&lt;/i>',
+      mouseOver: function() { alert('mouseOver'); },
+      click: function() { alert('click'); }
     }
-  ]
+  ],
+  unit: '€'
 });</code></pre>
-        <div style="padding: 10px; border: 1px solid #e9ebec; border-radius: 3px;">
+        <div style="padding: 10px; border: 1px solid #e9ebec; border-radius: 3px; margin-top: 5px;">
           <div id="step-progressbar-1"></div>
         </div>
 
@@ -201,25 +205,28 @@
 
       $(document).ready(function() {
         $('#step-progressbar-1').stepProgressBar({
-          currentValue: 100,
+          currentValue: 110,
           steps: [
+            { value: 10 },
             {
-              topLabel: '50 unit',
-              value: 50
+              topLabel: '50 custom unit',
+              value: 50,
+              bottomLabel: '<i class="material-icons">thumb_up</i>'
             },
             {
-              topLabel: '150 unit',
-              value: 150
+              value: 150,
+              bottomLabel: '<i class="material-icons">card_giftcard</i>'
             },
             {  
-              topLabel: '200 unit',
               value: 200, 
-              bottomLabel: '<i class="material-icons">thumb up</i> achieved!',
+              bottomLabel: '<i class="material-icons">star</i>',
               mouseOver: function() { alert('mouseOver'); },
               click: function() { alert('click'); }
             }
-          ]
+          ],
+          unit: '€'
         });
+
         setTimeout(function() {
             console.log($('#step-progressbar-1').stepProgressBar('getCurrentValue'));
         }, 1500);
