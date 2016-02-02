@@ -154,6 +154,21 @@
               <td>Set the bar progress value with a number</td>
               <td></td>
             </tr>
+            <tr>
+              <td>findStep</td>
+              <td>Find a step depending on its value</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>addStep</td>
+              <td>Add a step</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>removeStepWithValue</td>
+              <td>Remove a step depending on its value</td>
+              <td></td>
+            </tr>
           </tbody>
         </table>
 
@@ -188,6 +203,11 @@
         <div style="padding: 10px; border: 1px solid #e9ebec; border-radius: 3px; margin-top: 5px;">
           <div id="step-progressbar-1"></div>
         </div>
+        <input type="button" id="get-current-value-btn" value="get current value"><br>
+        <input type="button" id="set-current-value-btn" value="set current value to 190"><br>
+        <input type="button" id="find-step-btn" value="find step with value = 150 (see in console)"><br>
+        <input type="button" id="add-step-btn" value="add step with value = 250"><br>
+        <input type="button" id="remove-step-btn" value="remove step with value = 50"><br>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mickaelr/jquery-stepProgressBar">jquery-stepProgressBar</a> is maintained by <a href="https://github.com/mickaelr">mickaelr</a>.</span>
@@ -227,12 +247,37 @@
           unit: '€'
         });
 
-        setTimeout(function() {
+        /*setTimeout(function() {
             console.log($('#step-progressbar-1').stepProgressBar('getCurrentValue'));
         }, 1500);
         setTimeout(function() {
             $('#step-progressbar-1').stepProgressBar('setCurrentValue', 190);
         }, 3000);
+        setTimeout(function() {
+            console.log($('#step-progressbar-1').stepProgressBar('findStep', 150));
+        }, 4500);
+        setTimeout(function() {
+            $('#step-progressbar-1').stepProgressBar('addStep', {value: 250});
+        }, 6000);
+        setTimeout(function() {
+            $('#step-progressbar-1').stepProgressBar('removeStep', 50);
+        }, 6000);*/
+
+        $('#get-current-value-btn').click(function() {
+          alert($('#step-progressbar-1').stepProgressBar('getCurrentValue'));
+        });
+        $('#set-current-value-btn').click(function() {
+          $('#step-progressbar-1').stepProgressBar('setCurrentValue', 190);
+        });
+        $('#find-step-btn').click(function() {
+          console.log($('#step-progressbar-1').stepProgressBar('findStep', 150));
+        });
+        $('#add-step-btn').click(function() {
+          $('#step-progressbar-1').stepProgressBar('addStep', {value: 250});
+        });
+        $('#remove-step-btn').click(function() {
+          $('#step-progressbar-1').stepProgressBar('removeStep', 50);
+        });
       });
     </script>
   

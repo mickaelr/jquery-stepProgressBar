@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------
  *JAVASCRIPT "jquery.stepProgressBar.js"
- *Version:    0.1.0 - 2016
+ *Version:    0.1.5 - 2016
  *author:     Mickaël Roy
  *website:    http://www.mickaelroy.com
  *Licensed MIT 
@@ -28,6 +28,14 @@
         // Set the instance options extending the plugin defaults and
         // the options passed by the user
         this.settings = $.extend({}, $.fn[pluginName].defaults, options);
+
+        this.stepFields = [
+            'value',
+            'topLabel',
+            'bottomLabel',
+            'mouseOver',
+            'click',
+        ];
             
         // Initialize the plugin instance
         this.init();
@@ -94,23 +102,7 @@
                 this.bottomlabelWrapper.addClass('step-progressbar-labels-wrapper');
                 this.bottomLabelContainer.append(this.bottomlabelWrapper);
 
-                this._calcStepsProgressValues();
-                this._findNextStep();
-
-                for(var i = 0; i < this.settings.steps.length; i++) {
-                    // for following method calls we suppose that steps are sorted, if it's not always the case we'll have to implementa sort function.
-
-                    // create progress bar step element
-                    this._buildStep(this.settings.steps[i], i);
-
-                    // create top label corresponding to that step
-                    this._buildTopLabel(this.settings.steps[i], i);
-
-                    // create bottom label corresponding to that step
-                    this._buildBottomLabel(this.settings.steps[i], i);
-                }
-
-                this._updateNextStepElm();
+                this._updateSteps();
             }
         },
 
@@ -158,6 +150,65 @@
             this._updateNextStepElm();
         },
 
+        /**
+         * findStep method
+         *
+         * @example
+         * $('#element').pluginName('findStep', value);
+         * 
+         * @param  {object} step [value of the step object to retreive]
+         */
+        findStep: function(value) {
+            if(!isNullOrUndefined(value) && !isNullOrUndefined(this.settings.steps) && this.settings.steps.length > 0) {
+                for(var i = 0; i < this.settings.steps.length; i++) {
+                    if(this.settings.steps[i].value == value)
+                        return this.settings.steps[i];
+                }
+            } else return;
+        },
+
+        /**
+         * addStep method
+         *
+         * @example
+         * $('#element').pluginName('addStep', step);
+         * 
+         * @param  {object} step [the step object to add]
+         */
+        addStep: function(step) {
+            if(!isNullOrUndefined(step) && !isNullOrUndefined(step.value)) {
+                //TO BE ENHANCED
+                // For ex. current progress value has to be recalculated each time
+                console.log('don\'t work perfectly yet...');
+
+                // add new built step to steps array
+                this.settings.steps.push(step);
+                // refresh steps
+                this._updateSteps();
+            }
+        },
+
+        /**
+         * removeStep method
+         *
+         * @example
+         * $('#element').pluginName('removeStep', value);
+         * 
+         * @param  {object} step [value of the step object to remove]
+         */
+        removeStep: function(value) {
+            if(!isNullOrUndefined(value) && !isNullOrUndefined(this.settings.steps) && this.settings.steps.length > 0) {
+                for(var i = 0; i < this.settings.steps.length; i++) {
+                    if(this.settings.steps[i].value == value) {
+                        this._deleteStep(this.settings.steps[i], i);
+                        return;
+                    }
+                }
+                // refresh steps
+                this._updateSteps();
+            }
+        },
+
         // To call a call a pseudo private method: 
         //this._pseudoPrivateMethod();
 
@@ -170,7 +221,7 @@
          *  $('#element').jqueryPlugin('_pseudoPrivateMethod');  // Will not work
          */
 
-        //
+        // method that claculates current progress value (in percent)
         _calcCurrentProgressValue: function() {
             if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0)) {
                 this.progressValue = 100;
@@ -184,7 +235,7 @@
             return this.progressValue;
         },
 
-        //
+        // method that claculates steps progress value (in percent)
         _calcStepsProgressValues: function() {
             if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0)) {
                 return;
@@ -202,7 +253,7 @@
             }
         },
 
-        //
+        // method that retreive min & max steps
         _retrieveMinAndMaxSteps: function() {
             if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0)) {
                 return;
@@ -230,7 +281,7 @@
             }
         },
 
-        //
+        // method that finds the step which's following the current value
         _findNextStep: function() {
             if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0))
                 return;
@@ -259,7 +310,7 @@
             }
         },
 
-        //
+        // method that sets 'isNextStep' field depending on the provided step parameter
         _setNextStep: function(step) {
             if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0))
                 return;
@@ -269,7 +320,7 @@
             step.isNextStep = true;
         },
 
-        //
+        // method that updates steps element in order to distinguish which one is corresponding to the next step
         _updateNextStepElm: function() {
             if(isNullOrUndefined(this.settings.steps) || (this.settings.steps && this.settings.steps.length <= 0))
                 return;
@@ -286,61 +337,164 @@
             }
         },
 
-        //
+        // method that updates
+        _updateSteps: function() {
+            // sort steps
+            this.settings.steps.sort(sortByValue);
+
+            // remove duplicated steps
+            this._mergeDuplicatedSteps();
+
+            // calculate steps progress values (in percent)
+            this._calcStepsProgressValues();
+            // find the step that follows the current progress value
+            this._findNextStep();
+
+            for(var i = 0; i < this.settings.steps.length; i++) {
+                // for following method calls we suppose that steps are sorted, if it's not always the case we'll have to implementa sort function.
+
+                // create progress bar step element
+                this._buildStep(this.settings.steps[i], i);
+
+                // create top label corresponding to that step
+                this._buildTopLabel(this.settings.steps[i], i);
+
+                // create bottom label corresponding to that step
+                this._buildBottomLabel(this.settings.steps[i], i);
+            }
+
+            // update next step html classes
+            this._updateNextStepElm();
+        },
+
+        // method that updates the bar progress value.
         _updateProgress: function() {
             if(this.progressElm)
                 this.progressElm.css('width', this._calcCurrentProgressValue() + '%');
         },
 
-        //
+        // method that build a step element. (index is useful to add special classes for 1st and last steps)
         _buildStep: function(step, index) {
             if(isNullOrUndefined(step) || (!isNullOrUndefined(step) && isNullOrUndefined(step.progressValue)))
                 return;
 
-            var stepElm = $('<span>');
-            stepElm.addClass('step-progressbar-step');
+            if(isNullOrUndefined(step.stepElement)) {
+                var stepElm = $('<span>');
+                stepElm.addClass('step-progressbar-step');
+                this.stepsContainer.append(stepElm);
+                step.stepElement = stepElm;
+            }
+            // following removeClass are useful just for step update
+            step.stepElement.removeClass('step-progressbar-firststep');
+            step.stepElement.removeClass('step-progressbar-laststep');
             if(index == 0)
-                stepElm.addClass('step-progressbar-firststep');
+                step.stepElement.addClass('step-progressbar-firststep');
             if(index == this.settings.steps.length - 1)
-                stepElm.addClass('step-progressbar-laststep');
-            stepElm.css('left', step.progressValue + '%');
-            this.stepsContainer.append(stepElm);
-            step.stepElement = stepElm;
+                step.stepElement.addClass('step-progressbar-laststep');
+            step.stepElement.css('left', step.progressValue + '%');
         },
 
-        //
+        // method that delete HTML elements for a step.
+        _deleteStep: function(step, index) {
+            if(isNullOrUndefined(step))
+                return;
+
+            if(step.stepElement)
+                step.stepElement.remove();
+            if(step.topLabelElement)
+                step.topLabelElement.remove();
+            if(step.bottomLabelElement)
+                step.bottomLabelElement.remove();
+
+            this.settings.steps.splice(index, 1);
+            delete step;
+        },
+
+        // method that detects duplicated steps and merges them
+        _mergeDuplicatedSteps: function() {
+            var duplicatedSteps = [];
+
+            // sort steps for faster duplication detection
+            this.settings.steps.sort(sortByValue);
+
+            for(var i = 0; i < this.settings.steps.length - 1; i++) {
+                if(this.settings.steps[i].value == this.settings.steps[i + 1].value) {
+                    var mergedStep = this._mergeSteps(this.settings.steps[i], this.settings.steps[i + 1]);
+                    this.settings.steps[i] = mergedStep;
+                    this.settings.steps[i + 1] = mergedStep;
+                    duplicatedSteps.push(i + 1);
+                }
+            }
+
+            if(!isNullOrUndefined(duplicatedSteps) && duplicatedSteps.length > 0) {
+                // we sort indexes by descendant order to use the splice() correctly method to remove duplicated steps
+                duplicatedSteps.sort();
+                duplicatedSteps.reverse();
+                for(var j = 0; j < duplicatedSteps.length; j++) {
+                    this.settings.steps.splice(duplicatedSteps[j], 1);
+                }
+            }
+        },
+
+        // method that gives the result of the two given steps merge
+        _mergeSteps: function(step1, step2) {
+            if(isNullOrUndefined(step1) && isNullOrUndefined(step2)) 
+                return;
+            if(isNullOrUndefined(step1) && !isNullOrUndefined(step2)) 
+                return step2;
+            if(!isNullOrUndefined(step1) && isNullOrUndefined(step2)) 
+                return step1;
+
+            var mergedStep = {};
+            for(field in this.stepFields) {
+                mergedStep[field] = step1[field] ? step1[field]  : step2[field];
+            }
+            return mergedStep;
+        },
+
+        // method that builds the topLabel element. (index is useful to add special classes for 1st and last steps)
         _buildTopLabel: function(step, index) {
             if(isNullOrUndefined(step) || (!isNullOrUndefined(step) && isNullOrUndefined(step.progressValue)))
                 return;
 
-            var topLabelElm = $('<span>');
-            topLabelElm.addClass('step-progressbar-steplabel');
+            if(isNullOrUndefined(step.topLabelElement)) {
+                var topLabelElm = $('<span>');
+                topLabelElm.addClass('step-progressbar-steplabel');
+                this.toplabelWrapper.append(topLabelElm);
+                step.topLabelElement = topLabelElm;
+            }
+            // following removeClass are useful just for step update
+            step.topLabelElement.removeClass('step-progressbar-firststep');
+            step.topLabelElement.removeClass('step-progressbar-laststep');
             if(index == 0)
-                topLabelElm.addClass('step-progressbar-firststep');
+                step.topLabelElement.addClass('step-progressbar-firststep');
             if(index == this.settings.steps.length - 1)
-                topLabelElm.addClass('step-progressbar-laststep');
-            topLabelElm.css('left', step.progressValue + '%');
+                step.topLabelElement.addClass('step-progressbar-laststep');
+            step.topLabelElement.css('left', step.progressValue + '%');
             var label = step.topLabel ? step.topLabel : (!isNullOrUndefined(step.value) ? (step.value + this.settings.unit) : '');
-            topLabelElm.html(label);
-            this.toplabelWrapper.append(topLabelElm);
-            step.topLabelElement = topLabelElm;
+            step.topLabelElement.html(label);
         },
 
-        //
+        // method that builds the bottomLabel element. (index is useful to add special classes for 1st and last steps)
         _buildBottomLabel: function(step, index) {
             if(isNullOrUndefined(step) || (!isNullOrUndefined(step) && isNullOrUndefined(step.progressValue)))
                 return;
 
-            var bottomLabelElm = $('<span>');
-            bottomLabelElm.addClass('step-progressbar-steplabel');
+            if(isNullOrUndefined(step.bottomLabelElement)) {
+                var bottomLabelElm = $('<span>');
+                bottomLabelElm.addClass('step-progressbar-steplabel');
+                this.bottomlabelWrapper.append(bottomLabelElm);
+                step.bottomLabelElement = bottomLabelElm;
+            }
+            // following removeClass are useful just for step update
+            step.bottomLabelElement.removeClass('step-progressbar-firststep');
+            step.bottomLabelElement.removeClass('step-progressbar-laststep');
             if(index == 0)
-                bottomLabelElm.addClass('step-progressbar-firststep');
+                step.bottomLabelElement.addClass('step-progressbar-firststep');
             if(index == this.settings.steps.length - 1)
-                bottomLabelElm.addClass('step-progressbar-laststep');
-            bottomLabelElm.css('left', step.progressValue + '%');
-            bottomLabelElm.html(step.bottomLabel);
-            this.bottomlabelWrapper.append(bottomLabelElm);
-            step.bottomLabelElement = bottomLabelElm;
+                step.bottomLabelElement.addClass('step-progressbar-laststep');
+            step.bottomLabelElement.css('left', step.progressValue + '%');
+            step.bottomLabelElement.html(step.bottomLabel);
         }
     };
 
@@ -381,6 +535,11 @@
             }
         }
     };
+
+    // Closure to use to sort array by "value" field
+    function sortByValue(a, b) {
+      return a.value - b.value;
+    };
     
     $.fn[pluginName] = function(options) {
         var args = arguments;
@@ -396,9 +555,8 @@
         } else if (typeof options === 'string' && options[0] !== '_' && options !== 'init') {
             // Call a public pluguin method (not starting with an underscore) for each 
             // selected element.
-            if (Array.prototype.slice.call(args, 1).length === 0 && $.inArray(options, $.fn[pluginName].getters) !== -1) {
-                // If the user does not pass any arguments and the method allows to
-                // work as a getter then break the chainability so we can return a value
+            if ($.inArray(options, $.fn[pluginName].getters) !== -1) {
+                // If the method allows to work as a getter then break the chainability so we can return a value
                 // instead the element reference.
                 var instance = $.data(this[0], 'plugin_' + pluginName);
                 return instance[options].apply(instance, Array.prototype.slice.call(args, 1));
@@ -418,7 +576,7 @@
      * Names of the pluguin methods that can act as a getter method.
      * @type {Array}
      */
-    $.fn[pluginName].getters = ['getCurrentValue', 'setCurrentValue'];
+    $.fn[pluginName].getters = ['getCurrentValue', 'findStep'];
 
     /**
      * Default options
