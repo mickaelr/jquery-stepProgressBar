@@ -203,11 +203,28 @@
         <div style="padding: 10px; border: 1px solid #e9ebec; border-radius: 3px; margin-top: 5px;">
           <div id="step-progressbar-1"></div>
         </div>
-        <input type="button" id="get-current-value-btn" value="get current value"><br>
-        <input type="button" id="set-current-value-btn" value="set current value to 190"><br>
-        <input type="button" id="find-step-btn" value="find step with value = 150 (see in console)"><br>
-        <input type="button" id="add-step-btn" value="add step with value = 250"><br>
-        <input type="button" id="remove-step-btn" value="remove step with value = 50"><br>
+
+        <p>Test it:</p>
+        <style type="text/css">
+          .spb-btn {
+            display: inline-block;
+            padding: 10px;
+            margin: 5px auto;
+            color: #FFFFFF;
+            background-color: #606c71;
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            -o-border-radius: 2px;
+            -ms-border-radius: 2px;
+            border-radius: 2px;
+            cursor: pointer;
+          }
+        </style>
+        <span class="spb-btn" id="get-current-value-btn">get current value</span><br>
+        <span class="spb-btn" id="set-current-value-btn">set current value to 190</span><br>
+        <span class="spb-btn" id="find-step-btn">find step with value = 150 (see in console)</span><br>
+        <span class="spb-btn" id="add-step-btn">add step with value = 250</span><br>
+        <span class="spb-btn" id="remove-step-btn">remove step with value = 50</span><br>
 
       <footer class="site-footer">
         <span class="site-footer-owner"><a href="https://github.com/mickaelr/jquery-stepProgressBar">jquery-stepProgressBar</a> is maintained by <a href="https://github.com/mickaelr">mickaelr</a>.</span>
@@ -246,22 +263,6 @@
           ],
           unit: '€'
         });
-
-        /*setTimeout(function() {
-            console.log($('#step-progressbar-1').stepProgressBar('getCurrentValue'));
-        }, 1500);
-        setTimeout(function() {
-            $('#step-progressbar-1').stepProgressBar('setCurrentValue', 190);
-        }, 3000);
-        setTimeout(function() {
-            console.log($('#step-progressbar-1').stepProgressBar('findStep', 150));
-        }, 4500);
-        setTimeout(function() {
-            $('#step-progressbar-1').stepProgressBar('addStep', {value: 250});
-        }, 6000);
-        setTimeout(function() {
-            $('#step-progressbar-1').stepProgressBar('removeStep', 50);
-        }, 6000);*/
 
         $('#get-current-value-btn').click(function() {
           alert($('#step-progressbar-1').stepProgressBar('getCurrentValue'));

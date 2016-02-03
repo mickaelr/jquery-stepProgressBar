@@ -63,45 +63,13 @@
          *         
          */
         init: function() {
-            this.$el.addClass('step-progressbar-container');
-            if(this.settings.rounded)
-                this.$el.addClass('step-progressbar-rounded');
-
-            this.topLabelContainer = $('<div>');
-            this.topLabelContainer.addClass('step-progressbar-toplabels');
-            this.$el.append(this.topLabelContainer);
-
-            this.barContainer = $('<div>');
-            this.barContainer.addClass('step-progressbar-bar-wrapper');
-            this.$el.append(this.barContainer);
-            this.barElm = $('<span>');
-            this.barElm.addClass('step-progressbar-bar');
-            this.barContainer.append(this.barElm);
-            this.progressElm = $('<span>');
-            this.progressElm.addClass('step-progressbar-progress');
-            this.barElm.append(this.progressElm);
-
-            this.bottomLabelContainer = $('<div>');
-            this.bottomLabelContainer.addClass('step-progressbar-bottomlabels');
-            this.$el.append(this.bottomLabelContainer);
-
-            this._updateProgress();
+            // init bar structure
+            this._buildBar();
 
             if(this.settings.steps && this.settings.steps.length > 0) {
-                this.stepsWrapper = $('<span>');
-                this.stepsWrapper.addClass('step-progressbar-steps-wrapper');
-                this.barElm.append(this.stepsWrapper);
-                this.stepsContainer = $('<span>');
-                this.stepsContainer.addClass('step-progressbar-steps');
-                this.stepsWrapper.append(this.stepsContainer);
-
-                this.toplabelWrapper = $('<span>');
-                this.toplabelWrapper.addClass('step-progressbar-labels-wrapper');
-                this.topLabelContainer.append(this.toplabelWrapper);
-                this.bottomlabelWrapper = $('<span>');
-                this.bottomlabelWrapper.addClass('step-progressbar-labels-wrapper');
-                this.bottomLabelContainer.append(this.bottomlabelWrapper);
-
+                // init steps wrapper structure
+                this._buildStepsWrapper();
+                // update steps / progress / labels values & elements
                 this._updateSteps();
             }
         },
@@ -177,10 +145,6 @@
          */
         addStep: function(step) {
             if(!isNullOrUndefined(step) && !isNullOrUndefined(step.value)) {
-                //TO BE ENHANCED
-                // For ex. current progress value has to be recalculated each time
-                console.log('don\'t work perfectly yet...');
-
                 // add new built step to steps array
                 this.settings.steps.push(step);
                 // refresh steps
@@ -220,6 +184,48 @@
          *  @example
          *  $('#element').jqueryPlugin('_pseudoPrivateMethod');  // Will not work
          */
+
+        // method that build progress bar HTML structure
+        _buildBar: function() {
+            this.$el.addClass('step-progressbar-container');
+            if(this.settings.rounded)
+                this.$el.addClass('step-progressbar-rounded');
+
+            this.topLabelContainer = $('<div>');
+            this.topLabelContainer.addClass('step-progressbar-toplabels');
+            this.$el.append(this.topLabelContainer);
+
+            this.barContainer = $('<div>');
+            this.barContainer.addClass('step-progressbar-bar-wrapper');
+            this.$el.append(this.barContainer);
+            this.barElm = $('<span>');
+            this.barElm.addClass('step-progressbar-bar');
+            this.barContainer.append(this.barElm);
+            this.progressElm = $('<span>');
+            this.progressElm.addClass('step-progressbar-progress');
+            this.barElm.append(this.progressElm);
+
+            this.bottomLabelContainer = $('<div>');
+            this.bottomLabelContainer.addClass('step-progressbar-bottomlabels');
+            this.$el.append(this.bottomLabelContainer);
+        },
+
+        // method that build HTML steps wraper structure
+        _buildStepsWrapper: function() {
+            this.stepsWrapper = $('<span>');
+            this.stepsWrapper.addClass('step-progressbar-steps-wrapper');
+            this.barElm.append(this.stepsWrapper);
+            this.stepsContainer = $('<span>');
+            this.stepsContainer.addClass('step-progressbar-steps');
+            this.stepsWrapper.append(this.stepsContainer);
+
+            this.toplabelWrapper = $('<span>');
+            this.toplabelWrapper.addClass('step-progressbar-labels-wrapper');
+            this.topLabelContainer.append(this.toplabelWrapper);
+            this.bottomlabelWrapper = $('<span>');
+            this.bottomlabelWrapper.addClass('step-progressbar-labels-wrapper');
+            this.bottomLabelContainer.append(this.bottomlabelWrapper);
+        },
 
         // method that claculates current progress value (in percent)
         _calcCurrentProgressValue: function() {
@@ -345,6 +351,9 @@
             // remove duplicated steps
             this._mergeDuplicatedSteps();
 
+            // calculate current progress value depending on steps
+            this._updateProgress();
+
             // calculate steps progress values (in percent)
             this._calcStepsProgressValues();
             // find the step that follows the current progress value
@@ -446,8 +455,11 @@
                 return step1;
 
             var mergedStep = {};
-            for(field in this.stepFields) {
-                mergedStep[field] = step1[field] ? step1[field]  : step2[field];
+            if(!isNullOrUndefined(this.stepFields) && this.stepFields.length >= 0) {
+                for(var i = 0; i < this.stepFields.length; i++) {
+                    var field = this.stepFields[i];
+                    mergedStep[field] = step1[field] ? step1[field]  : step2[field];
+                }
             }
             return mergedStep;
         },
