@@ -598,6 +598,7 @@
         steps           : [], /* all progression steps */
         rounded         : true, /* to switch between classic/rounded bar */
         unit            : '', /* values unit */
+        responsiveLimit : 480, /* bound value below which the progressbar has to be adapted */
         progressLabel   : function(currentValue, maxValue, minValue, percentValue) {
             return (percentValue + '%');
         }, /* in order to customize label that will be displayed on progress bar. */
