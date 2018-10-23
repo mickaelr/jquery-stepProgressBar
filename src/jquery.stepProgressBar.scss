@@ -165,7 +165,7 @@ $progressbar-bottomlabel-margin-bottom: 5px;
 	.step-progressbar-bar {
 		padding: 0 ($progressbar-height / 2) 0 ($progressbar-height / 2);
 
-		&:before { 
+		&-before { 
 			content: ' ';
 			position: absolute;
 	    	height: $progressbar-height;
@@ -186,7 +186,7 @@ $progressbar-bottomlabel-margin-bottom: 5px;
 	    	border-width: 0;
 		}
 
-		&:after { 
+		&-after { 
 			content: ' ';
 			position: absolute;
 		    height: $progressbar-height;

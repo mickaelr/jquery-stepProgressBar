@@ -132,7 +132,7 @@
 .step-progressbar-rounded .step-progressbar-bar {
   padding: 0 25px 0 25px;
 }
-.step-progressbar-rounded .step-progressbar-bar:before {
+.step-progressbar-rounded .step-progressbar-bar-before {
   content: ' ';
   position: absolute;
   height: 50px;
@@ -160,7 +160,7 @@
   left: 25px;
   border-width: 0;
 }
-.step-progressbar-rounded .step-progressbar-bar:after {
+.step-progressbar-rounded .step-progressbar-bar-after {
   content: ' ';
   position: absolute;
   height: 50px;

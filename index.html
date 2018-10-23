@@ -85,6 +85,42 @@
               <td>''</td>
               <td>The progress unit</td>
             </tr>
+            <tr>
+              <td>progressColor</td>
+              <td>string</td>
+              <td>'#0E97C4'</td>
+              <td>progressbar's bar color</td>
+            </tr>
+            <tr>
+              <td>progressBackgroundColor</td>
+              <td>string</td>
+              <td>'#FFFFFF'</td>
+              <td>progressbar's background color</td>
+            </tr>
+            <tr>
+              <td>progressBorderColor</td>
+              <td>string</td>
+              <td>'#CCCCCC''</td>
+              <td>progressbar's border color</td>
+            </tr>
+            <tr>
+              <td>progressStepBorderColor</td>
+              <td>string</td>
+              <td>'#CCCCCC''</td>
+              <td>progressbar's step color</td>
+            </tr>
+            <tr>
+              <td>progressToplabelFontColor</td>
+              <td>string</td>
+              <td>'#BBBBBB'</td>
+              <td>progressbar's top label color</td>
+            </tr>
+            <tr>
+              <td>progressBottomlabelFontColor</td>
+              <td>string</td>
+              <td>'#BBBBBB'</td>
+              <td>progressbar's bottom label color</td>
+            </tr>
           </tbody>
         </table>
 
@@ -113,10 +149,28 @@
               <td>The label we want to display for that step above the bar</td>
             </tr>
             <tr>
+              <td>topLabelColor</td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>progressbar's step bottom label color</td>
+            </tr>
+            <tr>
               <td>bottomLabel</td>
               <td>html string</td>
               <td>undefined</td>
               <td>The label we want to display for that step below the bar</td>
+            </tr>
+            <tr>
+              <td>bottomLabelColor</td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>progressbar's step bottom label color</td>
+            </tr>
+            <tr>
+              <td>borderColor</td>
+              <td>string</td>
+              <td>undefined</td>
+              <td>progressbar's step color</td>
             </tr>
             <tr>
               <td>mouseOver</td>
@@ -180,20 +234,28 @@
 <pre><code class="language-markup">&lt;div id=".step-progressbar-1">&lt;/div></code></pre>
 <pre><code class="language-javascript">$('#.step-progressbar-1').stepProgressBar({
   currentValue: 110,
+  progressColor: '#FF0000',
+  progressBorderColor: '#FF0000',
+  progressStepBorderColor: '#00FFFF',
+  progressToplabelFontColor: '#FF0000',
+  //progressBottomlabelFontColor: '#FF0000',
   steps: [
     { value: 10 },
     {
       topLabel: '50 custom unit',
       value: 50,
-      bottomLabel: '&lt;i class="material-icons">thumb_up&lt;/i>'
+      bottomLabel: '<i class="material-icons">thumb_up</i>',
+      bottomLabelColor: '#990099',
+      topLabelColor: '#990099',
+      borderColor: '#990099'
     },
     {
       value: 150,
-      bottomLabel: '&lt;i class="material-icons">card_giftcard&lt;/i>'
+      bottomLabel: '<i class="material-icons">card_giftcard</i>'
     },
     {  
       value: 200, 
-      bottomLabel: '&lt;i class="material-icons">star&lt;/i>',
+      bottomLabel: '<i class="material-icons">star</i>',
       mouseOver: function() { alert('mouseOver'); },
       click: function() { alert('click'); }
     }
@@ -357,12 +419,20 @@
       $(document).ready(function() {
         $('#step-progressbar-1').stepProgressBar({
           currentValue: 110,
+          progressColor: '#FF0000',
+          progressBorderColor: '#FF0000',
+          progressStepBorderColor: '#00FFFF',
+          progressToplabelFontColor: '#FF0000',
+          //progressBottomlabelFontColor: '#FF0000',
           steps: [
             { value: 10 },
             {
               topLabel: '50 custom unit',
               value: 50,
-              bottomLabel: '<i class="material-icons">thumb_up</i>'
+              bottomLabel: '<i class="material-icons">thumb_up</i>',
+              bottomLabelColor: '#990099',
+              topLabelColor: '#990099',
+              borderColor: '#990099'
             },
             {
               value: 150,
