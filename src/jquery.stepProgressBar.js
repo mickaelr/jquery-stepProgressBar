@@ -35,6 +35,9 @@
             'bottomLabel',
             'mouseOver',
             'click',
+            'topLabelColor',
+            'bottomLabelColor',
+            'borderColor'
         ];
             
         // Initialize the plugin instance
@@ -190,21 +193,42 @@
             this.$el.addClass('step-progressbar-container');
             if(this.settings.rounded)
                 this.$el.addClass('step-progressbar-rounded');
-
+            if(this.settings.progressBackgroundColor)
+            	this.$el.css('background-color',this.settings.progressBackgroundColor);
             this.topLabelContainer = $('<div>');
             this.topLabelContainer.addClass('step-progressbar-toplabels');
             this.$el.append(this.topLabelContainer);
 
             this.barContainer = $('<div>');
             this.barContainer.addClass('step-progressbar-bar-wrapper');
+            if(this.settings.progressBorderColor)
+	        	this.barContainer.css('border-color',this.settings.progressBorderColor); 
             this.$el.append(this.barContainer);
+            
+                 
             this.barElm = $('<span>');
             this.barElm.addClass('step-progressbar-bar');
+            
+            this.barElmBefore = $('<span>');
+            this.barElmBefore.addClass('step-progressbar-bar-before');
+	        if(this.settings.progressColor)
+	        	this.barElmBefore.css('background-color',this.settings.progressColor);
+	        this.barElm.append(this.barElmBefore);
+	        
             this.barContainer.append(this.barElm);
             this.progressElm = $('<span>');
             this.progressElm.addClass('step-progressbar-progress');
+            if(this.settings.progressColor)
+            	this.progressElm.css('background-color',this.settings.progressColor);
+            
             this.barElm.append(this.progressElm);
 
+            this.barElmAfter = $('<span>');
+            this.barElmAfter.addClass('step-progressbar-bar-after');
+	          if(this.settings.progressColor)
+	        	this.barElmAfter.css('background-color',this.settings.progressColor);
+	        this.barElm.append(this.barElmAfter);
+	        
             this.bottomLabelContainer = $('<div>');
             this.bottomLabelContainer.addClass('step-progressbar-bottomlabels');
             this.$el.append(this.bottomLabelContainer);
@@ -221,7 +245,10 @@
 
             this.toplabelWrapper = $('<span>');
             this.toplabelWrapper.addClass('step-progressbar-labels-wrapper');
+            if(this.settings.progressToplabelFontColor)
+            	this.toplabelWrapper.css('color',this.settings.progressToplabelFontColor);
             this.topLabelContainer.append(this.toplabelWrapper);
+            
             this.bottomlabelWrapper = $('<span>');
             this.bottomlabelWrapper.addClass('step-progressbar-labels-wrapper');
             this.bottomLabelContainer.append(this.bottomlabelWrapper);
@@ -390,6 +417,10 @@
             if(isNullOrUndefined(step.stepElement)) {
                 var stepElm = $('<span>');
                 stepElm.addClass('step-progressbar-step');
+                if(this.settings.progressStepBorderColor)
+                	stepElm.css('border-color',this.settings.progressStepBorderColor); 
+                if(step.borderColor)
+                	stepElm.css('border-color',step.borderColor); 
                 this.stepsContainer.append(stepElm);
                 step.stepElement = stepElm;
             }
@@ -472,6 +503,10 @@
             if(isNullOrUndefined(step.topLabelElement)) {
                 var topLabelElm = $('<span>');
                 topLabelElm.addClass('step-progressbar-steplabel');
+                if(this.settings.progressToplabelFontColor)
+                	topLabelElm.css('color',this.settings.progressToplabelFontColor);
+                if(step.topLabelColor)
+                	topLabelElm.css('color',step.topLabelColor);
                 this.toplabelWrapper.append(topLabelElm);
                 step.topLabelElement = topLabelElm;
             }
@@ -495,6 +530,10 @@
             if(isNullOrUndefined(step.bottomLabelElement)) {
                 var bottomLabelElm = $('<span>');
                 bottomLabelElm.addClass('step-progressbar-steplabel');
+                if(this.settings.progressBottomlabelFontColor)
+                	bottomLabelElm.css('color',this.settings.progressBottomlabelFontColor);
+                if(step.bottomLabelColor)
+                	bottomLabelElm.css('color',step.bottomLabelColor);
                 this.bottomlabelWrapper.append(bottomLabelElm);
                 step.bottomLabelElement = bottomLabelElm;
             }
@@ -602,7 +641,13 @@
         progressLabel   : function(currentValue, maxValue, minValue, percentValue) {
             return (percentValue + '%');
         }, /* in order to customize label that will be displayed on progress bar. */
-        progressFill    : undefined /* if we want to fill progress bar with animated gradient for ex. */
+        progressFill    : undefined, /* if we want to fill progress bar with animated gradient for ex. */
+        progressColor	: '#0E97C4',
+        progressBackgroundColor	: '#FFFFFF',
+        progressBorderColor	: '#CCCCCC',
+        progressStepBorderColor	: '#CCCCCC',
+        progressToplabelFontColor	: '#BBBBBB',
+        progressBottomlabelFontColor	: '#BBBBBB'
     };
  
 }(jQuery));
