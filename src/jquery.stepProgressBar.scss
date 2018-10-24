@@ -2,11 +2,11 @@
    GLOBAL VARIABLES
 \* ---------------- */
 
-$progressbar-height: 50px;
+$progressbar-height: 4em;
 $progressbar-color: #0E97C4;
 $progressbar-background: #FFFFFF;
 
-$progressbar-border-width: 3px;
+$progressbar-border-width: 0.3em;
 $progressbar-border-style: solid;
 $progressbar-border-color: #CCCCCC;
 
@@ -14,19 +14,19 @@ $progressbar-step-width: $progressbar-border-width;
 $progressbar-step-style: dashed;
 $progressbar-step-color: $progressbar-border-color;
 
-$progressbar-inner-border-width: 2px;
+$progressbar-inner-border-width: 0.2em;
 $progressbar-inner-border-style: solid;
 $progressbar-inner-border-color: $progressbar-background;
 
 $progressbar-toplabel-font-color: #BBBBBB;
-$progressbar-toplabel-font-size: 16px;
-$progressbar-toplabel-margin-top: 5px;
-$progressbar-toplabel-margin-bottom: 5px;
+$progressbar-toplabel-font-size: 1em;
+$progressbar-toplabel-margin-top: 0.5em;
+$progressbar-toplabel-margin-bottom: 0.5em;
 
 $progressbar-bottomlabel-font-color: #BBBBBB;
-$progressbar-bottomlabel-font-size: 16px;
-$progressbar-bottomlabel-margin-top: 5px;
-$progressbar-bottomlabel-margin-bottom: 5px;
+$progressbar-bottomlabel-font-size: 1em;
+$progressbar-bottomlabel-margin-top: 0.5em;
+$progressbar-bottomlabel-margin-bottom: 0.5em;
 
 /* ------ *\
    MIXINS
@@ -165,7 +165,7 @@ $progressbar-bottomlabel-margin-bottom: 5px;
 	.step-progressbar-bar {
 		padding: 0 ($progressbar-height / 2) 0 ($progressbar-height / 2);
 
-		&:before { 
+		&-before { 
 			content: ' ';
 			position: absolute;
 	    	height: $progressbar-height;
@@ -182,11 +182,11 @@ $progressbar-bottomlabel-margin-bottom: 5px;
 		}
 		&.step-progressbar-empty:before { 
 			width: 0;
-	    	left: 25px;
+	    	left: 0.25em;
 	    	border-width: 0;
 		}
 
-		&:after { 
+		&-after { 
 			content: ' ';
 			position: absolute;
 		    height: $progressbar-height;
@@ -231,7 +231,11 @@ $screen-md-max: 1200px;
 @media (max-width : $screen-md-max) {}
 
 /* Small devices (tablets, less than 992px) */
-@media (max-width : $screen-sm-max) {}
+@media (max-width : $screen-sm-max) {
+	.step-progressbar-container {
+		font-size: 0.8em;
+	}
+}
 
 /* Extra small devices (phones, less than 768px) */
 @media (max-width : $screen-xs-max) {
@@ -241,4 +245,8 @@ $screen-md-max: 1200px;
 	.step-progressbar-laststep:not(.step-progressbar-nextstep),
 	.step-progressbar-rounded .step-progressbar-firststep:not(.step-progressbar-nextstep),
 	.step-progressbar-rounded .step-progressbar-laststep:not(.step-progressbar-nextstep) { display: none; }
+	
+	.step-progressbar-container {
+		font-size: 0.6em;
+	}
 }
