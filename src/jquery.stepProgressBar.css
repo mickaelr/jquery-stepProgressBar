@@ -8,15 +8,15 @@
    GLOBAL STYLE
 \* ------------ */
 .step-progressbar-container {
-  padding: 0 3px 0 3px;
+  padding: 0 0.3em 0 0.3em;
 }
 
 .step-progressbar-bar-wrapper {
   width: 100%;
-  height: 50px;
-  margin-left: -3px;
+  height: 4em;
+  margin-left: -0.3em;
   background-color: #FFFFFF;
-  border: 3px solid #CCCCCC;
+  border: 0.3em solid #CCCCCC;
   box-sizing: content-box;
 }
 
@@ -33,7 +33,7 @@
   height: 100%;
   background-color: #0E97C4;
   box-sizing: border-box;
-  border-width: 2px;
+  border-width: 0.2em;
   border-style: solid;
   border-color: #FFFFFF;
   -webkit-transition: width 1s;
@@ -45,16 +45,16 @@
 
 .step-progressbar-toplabels {
   width: 100%;
-  height: 16px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  height: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .step-progressbar-bottomlabels {
   width: 100%;
-  height: 16px;
-  margin-top: 5px;
-  margin-bottom: 5px;
+  height: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .step-progressbar-labels-wrapper {
@@ -63,12 +63,12 @@
 }
 
 .step-progressbar-toplabels .step-progressbar-steplabel {
-  font-size: 16px;
+  font-size: 1em;
   color: #BBBBBB;
 }
 
 .step-progressbar-bottomlabels .step-progressbar-steplabel {
-  font-size: 16px;
+  font-size: 1em;
   color: #BBBBBB;
 }
 
@@ -104,7 +104,7 @@
   display: block;
   height: 100%;
   position: absolute;
-  border-width: 0 1.5px 0 1.5px;
+  border-width: 0 0.15em 0 0.15em;
   border-style: dashed;
   border-color: #CCCCCC;
 }
@@ -119,36 +119,36 @@
 \* ------------- */
 .step-progressbar-rounded .step-progressbar-toplabels,
 .step-progressbar-rounded .step-progressbar-bottomlabels {
-  padding: 0 25px 0 25px;
+  padding: 0 2em 0 2em;
   box-sizing: border-box;
 }
 .step-progressbar-rounded .step-progressbar-bar-wrapper {
-  -webkit-border-radius: 50px;
-  -moz-border-radius: 50px;
-  -ms-border-radius: 50px;
-  -o-border-radius: 50px;
-  border-radius: 50px;
+  -webkit-border-radius: 4em;
+  -moz-border-radius: 4em;
+  -ms-border-radius: 4em;
+  -o-border-radius: 4em;
+  border-radius: 4em;
 }
 .step-progressbar-rounded .step-progressbar-bar {
-  padding: 0 25px 0 25px;
+  padding: 0 2em 0 2em;
 }
 .step-progressbar-rounded .step-progressbar-bar-before {
-  content: ' ';
+  content: " ";
   position: absolute;
-  height: 50px;
-  width: 25px;
+  height: 4em;
+  width: 2em;
   top: 0;
   left: 0;
   background-color: #0E97C4;
   box-sizing: border-box;
-  border-width: 2px 0 2px 2px;
+  border-width: 0.2em 0 0.2em 0.2em;
   border-style: solid;
   border-color: #FFFFFF;
-  -webkit-border-radius: 50px 0 0 50px;
-  -moz-border-radius: 50px 0 0 50px;
-  -ms-border-radius: 50px 0 0 50px;
-  -o-border-radius: 50px 0 0 50px;
-  border-radius: 50px 0 0 50px;
+  -webkit-border-radius: 4em 0 0 4em;
+  -moz-border-radius: 4em 0 0 4em;
+  -ms-border-radius: 4em 0 0 4em;
+  -o-border-radius: 4em 0 0 4em;
+  border-radius: 4em 0 0 4em;
   -webkit-transition: width 0.2s, left 0.2s;
   -moz-transition: width 0.2s, left 0.2s;
   -ms-transition: width 0.2s, left 0.2s;
@@ -157,26 +157,26 @@
 }
 .step-progressbar-rounded .step-progressbar-bar.step-progressbar-empty:before {
   width: 0;
-  left: 25px;
+  left: 0.25em;
   border-width: 0;
 }
 .step-progressbar-rounded .step-progressbar-bar-after {
-  content: ' ';
+  content: " ";
   position: absolute;
-  height: 50px;
+  height: 4em;
   width: 0;
   top: 0;
-  right: 25px;
+  right: 2em;
   background-color: #0E97C4;
   box-sizing: border-box;
   border-width: 0;
   border-style: solid;
   border-color: #FFFFFF;
-  -webkit-border-radius: 0 50px 50px 0;
-  -moz-border-radius: 0 50px 50px 0;
-  -ms-border-radius: 0 50px 50px 0;
-  -o-border-radius: 0 50px 50px 0;
-  border-radius: 0 50px 50px 0;
+  -webkit-border-radius: 0 4em 4em 0;
+  -moz-border-radius: 0 4em 4em 0;
+  -ms-border-radius: 0 4em 4em 0;
+  -o-border-radius: 0 4em 4em 0;
+  border-radius: 0 4em 4em 0;
   -webkit-transition: width 0.2s, right 0.2s;
   -moz-transition: width 0.2s, right 0.2s;
   -ms-transition: width 0.2s, right 0.2s;
@@ -184,15 +184,15 @@
   transition: width 0.2s, right 0.2s;
 }
 .step-progressbar-rounded .step-progressbar-bar.step-progressbar-full:after {
-  width: 25px;
+  width: 2em;
   right: 0;
-  border-width: 2px 2px 2px 0;
+  border-width: 0.2em 0.2em 0.2em 0;
 }
 .step-progressbar-rounded .step-progressbar-bar .step-progressbar-progress {
-  border-width: 2px 0 2px 0;
+  border-width: 0.2em 0 0.2em 0;
 }
 .step-progressbar-rounded .step-progressbar-steps-wrapper {
-  padding: 0 25px 0 25px;
+  padding: 0 2em 0 2em;
 }
 .step-progressbar-rounded .step-progressbar-firststep,
 .step-progressbar-rounded .step-progressbar-laststep {
@@ -206,14 +206,23 @@
 /* No media query since this is the default here -  */
 /* Medium devices (desktops, less than 1200px) */
 /* Small devices (tablets, less than 992px) */
+@media (max-width: 992px) {
+  .step-progressbar-container {
+    font-size: 0.8em;
+  }
+}
 /* Extra small devices (phones, less than 768px) */
 @media (max-width: 768px) {
   .step-progressbar-step:not(.step-progressbar-nextstep),
-  .step-progressbar-steplabel:not(.step-progressbar-nextstep),
-  .step-progressbar-firststep:not(.step-progressbar-nextstep),
-  .step-progressbar-laststep:not(.step-progressbar-nextstep),
-  .step-progressbar-rounded .step-progressbar-firststep:not(.step-progressbar-nextstep),
-  .step-progressbar-rounded .step-progressbar-laststep:not(.step-progressbar-nextstep) {
+.step-progressbar-steplabel:not(.step-progressbar-nextstep),
+.step-progressbar-firststep:not(.step-progressbar-nextstep),
+.step-progressbar-laststep:not(.step-progressbar-nextstep),
+.step-progressbar-rounded .step-progressbar-firststep:not(.step-progressbar-nextstep),
+.step-progressbar-rounded .step-progressbar-laststep:not(.step-progressbar-nextstep) {
     display: none;
+  }
+
+  .step-progressbar-container {
+    font-size: 0.6em;
   }
 }
